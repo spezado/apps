@@ -51,4 +51,5 @@ Future<void> main(List<String> args) async {
   out.writeln('};');
   client.close();
   File('lib/install/release.g.dart').writeAsStringSync(out.toString());
+  await Process.run('dart', ['format', 'lib/install/release.g.dart']);
 }

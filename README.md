@@ -3,12 +3,12 @@
 The **desktop and mobile apps** of [spezado](https://spezado.app) – free accounting for everyone – built with Flutter
 and licensed under **MIT**.
 
-> **Status: 0.1.0, a preview for the desktop.** The app does what the web app of spezado 0.1.0 does – pairing, setting
+> **Status: 0.2.0, a preview for the desktop.** The app does what the web app of spezado 0.1.0 does – pairing, setting
 > up books, overview, journal with reversals, booking (gross amount or lines), accounts with ledgers and opening
 > balances, bank statements and open entries, documents and e-invoices, invoices (XRechnung, ZUGFeRD), reports, review,
-> closing and the GoBD export – against **spezado 0.1.0 or later on the same device**; synchronisation between devices,
-> new in spezado after 0.1.0, follows. Phones and tablets follow once spezado serves its API to other devices with TLS;
-> the plan is in [docs/plan.md](docs/plan.md).
+> closing and the GoBD export – and installs spezado on this device by itself. Synchronisation between devices, new in
+> spezado 0.2, follows. Phones and tablets follow once they can reach spezado over TLS; the plan is in
+> [docs/plan.md](docs/plan.md).
 
 ## What they are
 
@@ -18,9 +18,6 @@ and licensed under **MIT**.
 - **MIT**, so that they can be distributed through app stores as well; spezado itself stays AGPL-3.0-or-later.
 
 ## Try it
-
-You need [spezado](https://github.com/spezado/spezado/releases) 0.1.0 or later on the same device. Start it with
-`spezado serve`; it prints the address and a pairing code.
 
 Download the app for your platform from the [releases](https://github.com/spezado/apps/releases), check it against
 its SHA-256 file and unpack it:
@@ -42,8 +39,15 @@ The apps are a preview and **not signed** by a publisher yet:
 Or build it yourself with [Flutter](https://docs.flutter.dev/get-started/install) 3.47: `flutter run -d macos` (or
 `-d windows`, `-d linux`; Linux needs `libgtk-3-dev` and `libsecret-1-dev`).
 
-Enter the code – or paste the whole link `http://127.0.0.1:8048/#pair=…` into the address. The app keeps its own
-token, which `spezado` can revoke (`GET`/`DELETE /api/v1/devices`).
+On the first start the app offers to **install spezado** on this device: it downloads
+[spezado](https://github.com/spezado/spezado/releases) 0.3.0 from its release, checks it against the SHA-256 pinned in
+the app, starts it with its icon in the menu bar or the system tray (`spezado tray`; on Linux `spezado serve` without
+an icon), pairs with it and – if you want – has it start at login. spezado keeps running when you close the app;
+quit it from its icon. Nothing to do in a terminal.
+
+If spezado runs already – started by yourself, on Intel Macs, or elsewhere – choose *spezado runs already* and enter
+the code `spezado serve` or `spezado tray` shows, or paste the whole link `http://127.0.0.1:8048/#pair=…`. The app
+keeps its own token, which spezado can revoke (`GET`/`DELETE /api/v1/devices`).
 
 ## How it is built
 

@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.2.0 – 2026-10-29
 
 - **spezado installs itself:** on the first start, the desktop app downloads spezado from its release, checks it
   against the SHA-256 pinned in the app, starts it with its icon in the menu bar or the system tray (`spezado tray`;
@@ -9,7 +9,8 @@
   starts it again if it does not answer.
 - **macOS:** no App Sandbox for the direct download, so that the app, the terminal and the web app share one
   workspace and the app can start spezado.
-- `tool/pin_spezado.dart VERSION` pins the spezado release and its checksums.
+- `tool/pin_spezado.dart VERSION` pins the spezado release and its checksums; pinned: spezado 0.3.0.
+- The client follows the API of spezado 0.3.0 (generated from its `api/openapi.json`).
 
 ## 0.1.0 – 2026-10-29
 

@@ -5,6 +5,8 @@
 //   flutter test integration_test/install_test.dart -d macos --dart-define=SPEZADO_BINARY=/path/to/spezado \
 //     --dart-define=SPEZADO_DIR=/tmp/ws --dart-define=SPEZADO_PORT=8053
 //
+// Without SPEZADO_BINARY it downloads the pinned release, as people get it.
+//
 // spezado keeps running afterwards, as it should; stop it with "Quit spezado" in the menu bar.
 
 import 'dart:io';
@@ -48,7 +50,6 @@ void main() {
   }
 
   testWidgets('installs spezado, starts it, pairs and sets up books', (tester) async {
-    expect(const String.fromEnvironment('SPEZADO_BINARY'), isNotEmpty, reason: 'pass --dart-define=SPEZADO_BINARY');
     expect(const String.fromEnvironment('SPEZADO_DIR'), isNotEmpty, reason: 'pass --dart-define=SPEZADO_DIR');
     final preferences = await SharedPreferences.getInstance();
     await preferences.clear();
