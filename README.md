@@ -3,11 +3,12 @@
 The **desktop and mobile apps** of [spezado](https://spezado.app) – free accounting for everyone – built with Flutter
 and licensed under **MIT**.
 
-> **Status: 0.1.0, a preview for the desktop.** The app does what spezado's web app does – pairing, setting up books,
-> overview, journal with reversals, booking (gross amount or lines), accounts with ledgers and opening balances, bank
-> statements and open entries, documents and e-invoices, invoices (XRechnung, ZUGFeRD), reports, review, closing and
-> the GoBD export – against **spezado 0.1.0 on the same device**. Phones and tablets follow once spezado serves its
-> API to other devices with TLS; the plan is in [docs/plan.md](docs/plan.md).
+> **Status: 0.1.0, a preview for the desktop.** The app does what the web app of spezado 0.1.0 does – pairing, setting
+> up books, overview, journal with reversals, booking (gross amount or lines), accounts with ledgers and opening
+> balances, bank statements and open entries, documents and e-invoices, invoices (XRechnung, ZUGFeRD), reports, review,
+> closing and the GoBD export – against **spezado 0.1.0 or later on the same device**; synchronisation between devices,
+> new in spezado after 0.1.0, follows. Phones and tablets follow once spezado serves its API to other devices with TLS;
+> the plan is in [docs/plan.md](docs/plan.md).
 
 ## What they are
 
@@ -18,13 +19,28 @@ and licensed under **MIT**.
 
 ## Try it
 
-You need [spezado 0.1.0](https://github.com/spezado/spezado/releases/tag/v0.1.0) and
-[Flutter](https://docs.flutter.dev/get-started/install) 3.47.
+You need [spezado](https://github.com/spezado/spezado/releases) 0.1.0 or later on the same device. Start it with
+`spezado serve`; it prints the address and a pairing code.
 
-```sh
-spezado serve            # prints the address and a pairing code
-flutter run -d macos     # or -d windows, -d linux
-```
+Download the app for your platform from the [releases](https://github.com/spezado/apps/releases), check it against
+its SHA-256 file and unpack it:
+
+| Platform | Archive | Start |
+|---|---|---|
+| macOS 12 or later (Apple silicon and Intel) | `spezado-app-…-macos.zip` | `spezado.app` |
+| Windows 10 or later, x86_64 | `spezado-app-…-windows-x86_64.zip` | `spezado.exe` |
+| Linux x86_64 or arm64 | `spezado-app-…-linux-….tar.gz` | `spezado` |
+
+The apps are a preview and **not signed** by a publisher yet:
+
+- **macOS** blocks the app at first: open it once, then allow it under *System Settings → Privacy & Security →
+  Open Anyway*.
+- **Windows** SmartScreen warns about an unknown publisher: *More info → Run anyway*.
+- **Linux** needs GTK 3 and libsecret, and a keyring that offers the Secret Service (GNOME Keyring, KWallet) for the
+  token.
+
+Or build it yourself with [Flutter](https://docs.flutter.dev/get-started/install) 3.47: `flutter run -d macos` (or
+`-d windows`, `-d linux`; Linux needs `libgtk-3-dev` and `libsecret-1-dev`).
 
 Enter the code – or paste the whole link `http://127.0.0.1:8048/#pair=…` into the address. The app keeps its own
 token, which `spezado` can revoke (`GET`/`DELETE /api/v1/devices`).

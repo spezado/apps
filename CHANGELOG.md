@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 – unreleased
+## 0.1.0 – 2026-10-29
 
 The first preview, for the desktop, against spezado 0.1.0 on the same device.
 
@@ -13,3 +13,5 @@ The first preview, for the desktop, against spezado 0.1.0 on the same device.
 - German and English; light, dark or like the system; spezado's brand with Domitian for headings.
 - Live: pages read again whenever the books change (Server-Sent Events).
 - The client of the API generated from `api/openapi.json` by `tool/generate.dart`.
+- Archives for macOS (universal), Windows (x86_64) and Linux (x86_64, arm64) with SHA-256 checksums; not signed by a
+  publisher yet.

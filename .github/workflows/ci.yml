@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: MIT
-# Format, lints and tests; the client generated from api/openapi.json up to date; a macOS build; the licence check
-# (REUSE). Flutter comes from its repository at the version named here; actions are pinned by commit.
+# Format, lints and tests; the client generated from api/openapi.json up to date; the desktop app built for macOS,
+# Windows and Linux; the licence check (REUSE). Flutter comes from its repository at the version named here; actions
+# are pinned by commit.
 name: CI
 
 on:
@@ -33,6 +34,31 @@ jobs:
       - run: flutter analyze
       - run: flutter test
       - run: flutter build macos --release
+
+  desktop:
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.runner }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Flutter
+        run: |
+          git clone --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+          # Git Bash on Windows runs the batch file, not the shell script.
+          if [[ "$RUNNER_OS" == Windows ]]; then echo "FLUTTER=flutter.bat" >> "$GITHUB_ENV"; else echo "FLUTTER=flutter" >> "$GITHUB_ENV"; fi
+      - name: Libraries for Linux – GTK, and libsecret for the keychain
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev libsecret-1-dev
+      - run: $FLUTTER pub get --enforce-lockfile
+      - name: Build
+        run: |
+          if [[ "$RUNNER_OS" == Windows ]]; then "$FLUTTER" build windows --release; else "$FLUTTER" build linux --release; fi
 
   licences:
     runs-on: ubuntu-latest

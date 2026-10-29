@@ -52,7 +52,16 @@ static void my_application_activate(GApplication* application) {
     gtk_window_set_title(window, "spezado");
   }
 
-  gtk_window_set_default_size(window, 1280, 720);
+  gtk_window_set_default_size(window, 1280, 820);
+
+  // spezado's icon, from the assets bundled next to the binary.
+  g_autofree gchar* executable = g_file_read_link("/proc/self/exe", nullptr);
+  if (executable != nullptr) {
+    g_autofree gchar* directory = g_path_get_dirname(executable);
+    g_autofree gchar* icon = g_build_filename(directory, "data", "flutter_assets", "assets", "brand",
+                                              "spezado-icon-256.png", nullptr);
+    gtk_window_set_icon_from_file(window, icon, nullptr);
+  }
 
   g_autoptr(FlDartProject) project = fl_dart_project_new();
   fl_dart_project_set_dart_entrypoint_arguments(

@@ -11,4 +11,4 @@ PRODUCT_NAME = spezado
 PRODUCT_BUNDLE_IDENTIFIER = app.spezado.spezado
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2026 app.spezado. All rights reserved.
+PRODUCT_COPYRIGHT = © 2026 falkOSS and the spezado contributors – MIT License
