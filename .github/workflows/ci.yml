@@ -1,0 +1,41 @@
+# SPDX-License-Identifier: MIT
+# Format, lints and tests; the client generated from api/openapi.json up to date; a macOS build; the licence check
+# (REUSE). Flutter comes from its repository at the version named here; actions are pinned by commit.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  FLUTTER_VERSION: 3.47.8
+
+jobs:
+  flutter:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Flutter
+        run: |
+          git clone --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+      - run: flutter pub get --enforce-lockfile
+      - name: Client from api/openapi.json up to date
+        run: |
+          dart run tool/generate.dart
+          git diff --exit-code lib/api/api.g.dart
+      - run: dart format --output=none --set-exit-if-changed lib test tool integration_test
+      - run: flutter analyze
+      - run: flutter test
+      - run: flutter build macos --release
+
+  licences:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: fsfe/reuse-action@9a55738c6490d015afe69ad187520395d2b7a1fa # v6.0.0
