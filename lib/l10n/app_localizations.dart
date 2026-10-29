@@ -1201,6 +1201,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'yes'**
   String get yes;
+
+  /// No description provided for @welcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to spezado'**
+  String get welcomeTitle;
+
+  /// No description provided for @welcomeText.
+  ///
+  /// In en, this message translates to:
+  /// **'The app keeps your books with spezado, which runs on this device – nothing leaves it.'**
+  String get welcomeText;
+
+  /// No description provided for @installTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Install spezado on this device'**
+  String get installTitle;
+
+  /// No description provided for @installText.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloads spezado {version} from its release on GitHub, checks it and starts it with an icon in the menu bar or the system tray. It keeps running when you close the app.'**
+  String installText(String version);
+
+  /// No description provided for @installTextNoTray.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloads spezado {version} from its release on GitHub, checks it and starts it in the background. It keeps running when you close the app.'**
+  String installTextNoTray(String version);
+
+  /// No description provided for @startAtLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'Start spezado when I log in'**
+  String get startAtLogin;
+
+  /// No description provided for @installAndStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Install and start'**
+  String get installAndStart;
+
+  /// No description provided for @connectInstead.
+  ///
+  /// In en, this message translates to:
+  /// **'spezado runs already – connect to it'**
+  String get connectInstead;
+
+  /// No description provided for @alreadyRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'spezado runs already on this device: enter the code it shows.'**
+  String get alreadyRunning;
+
+  /// No description provided for @installFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'spezado could not be installed: {reason}'**
+  String installFailed(String reason);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

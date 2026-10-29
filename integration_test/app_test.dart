@@ -72,6 +72,11 @@ void main() {
     await tester.pumpWidget(SpezadoApp(state: state));
     await settle(tester);
 
+    // Where the app could install spezado, it offers that first.
+    if (find.text('spezado runs already – connect to it').evaluate().isNotEmpty) {
+      await tester.tap(find.text('spezado runs already – connect to it'));
+      await settle(tester);
+    }
     await picture(tester, '01-pair');
     await tester.enterText(find.widgetWithText(TextFormField, 'Address of spezado'), address);
     await tester.enterText(find.widgetWithText(TextFormField, 'Pairing code'), code);

@@ -13,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/api.g.dart';
 import '../api/transport.dart';
+import '../install/installer.dart';
 
 /// Where `spezado serve` runs by default.
 final defaultAddress = Uri.parse('http://127.0.0.1:8048');
@@ -20,12 +21,70 @@ final defaultAddress = Uri.parse('http://127.0.0.1:8048');
 enum Screen { overview, journal, bank, documents, invoices, accounts, reports, review, closing, book }
 
 class AppState extends ChangeNotifier {
-  AppState(this._preferences, this._secrets, {String? token})
-    : lang =
+  AppState(this._preferences, this._secrets, {String? token, Installer? installer})
+    : installer =
+          installer ??
+          Installer(
+            binaryOverride: _binaryOverride.isEmpty ? null : _binaryOverride,
+            directory: _directoryOverride.isEmpty ? null : _directoryOverride,
+            port: _portOverride,
+          ),
+      lang =
           _preferences.getString(_langKey) ?? (PlatformDispatcher.instance.locale.languageCode == 'de' ? 'de' : 'en'),
       theme = ThemeMode.values.asNameMap()[_preferences.getString(_themeKey)] ?? ThemeMode.system {
     final address = Uri.tryParse(_preferences.getString(_addressKey) ?? '');
-    if (address != null && token != null) _connect(address, token);
+    if (address != null && token != null) {
+      _connect(address, token);
+      _startIfInstalled(address);
+    }
+  }
+
+  /// For development and tests: a spezado program instead of downloading one, its workspace directory and its
+  /// port – `--dart-define=SPEZADO_BINARY=…`, `SPEZADO_DIR`, `SPEZADO_PORT`.
+  static const _binaryOverride = String.fromEnvironment('SPEZADO_BINARY');
+  static const _directoryOverride = String.fromEnvironment('SPEZADO_DIR');
+  static const _portOverride = int.fromEnvironment('SPEZADO_PORT', defaultValue: 8048);
+
+  /// spezado on this device, as the desktop app installs and starts it.
+  final Installer installer;
+
+  /// Whether the app can install spezado on this device: the desktop, where spezado has a release.
+  bool get canInstall => (Platform.isMacOS || Platform.isWindows || Platform.isLinux) && installer.supported;
+
+  /// Starts spezado if the app installed it and it does not answer – after a restart, when it does not start at
+  /// login.
+  Future<void> _startIfInstalled(Uri address) async {
+    if (!canInstall || address != installer.address || await Installer.answers(address)) return;
+    if (await installer.binary() == null) return;
+    await installer.start();
+    for (var i = 0; i < 20 && !await Installer.answers(address); i++) {
+      await Future<void>.delayed(const Duration(milliseconds: 250));
+    }
+    await loadBooks();
+  }
+
+  /// Installs spezado on this device, starts it, pairs with it and – if `atLogin` – has it start at login. Throws
+  /// what went wrong; `progress` hears the share of the download done.
+  Future<void> installAndPair({required bool atLogin, void Function(double share)? progress}) async {
+    if (await Installer.answers(installer.address)) throw const InstallException('running');
+    await installer.install(progress: progress);
+    final code = Installer.newPairingCode();
+    await installer.start(pairing: code);
+    ApiException? last;
+    for (var i = 0; i < 60; i++) {
+      try {
+        await pair(installer.address, code, deviceName());
+        last = null;
+        break;
+      } on ApiException catch (error) {
+        last = error;
+        // Not listening yet: try again shortly; anything else is an answer.
+        if (error.status != 0) break;
+        await Future<void>.delayed(const Duration(milliseconds: 250));
+      }
+    }
+    if (last != null) throw InstallException(last.message);
+    await installer.autostart(atLogin);
   }
 
   /// The state as this device left it.

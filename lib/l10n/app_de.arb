@@ -184,5 +184,15 @@
   "vatSmallBusiness": "Kleinunternehmer (§ 19 UStG)",
   "writeInvoice": "Rechnung schreiben",
   "yearly": "Jährlich",
-  "yes": "ja"
+  "yes": "ja",
+  "welcomeTitle": "Willkommen bei spezado",
+  "welcomeText": "Die App führt deine Bücher mit spezado, das auf diesem Gerät läuft – nichts verlässt es.",
+  "installTitle": "spezado auf diesem Gerät installieren",
+  "installText": "Lädt spezado {version} aus seinem Release auf GitHub, prüft es und startet es mit einem Symbol in der Menüleiste bzw. im Infobereich. Es läuft weiter, wenn du die App schließt.",
+  "installTextNoTray": "Lädt spezado {version} aus seinem Release auf GitHub, prüft es und startet es im Hintergrund. Es läuft weiter, wenn du die App schließt.",
+  "startAtLogin": "spezado bei der Anmeldung starten",
+  "installAndStart": "Installieren und starten",
+  "connectInstead": "spezado läuft schon – damit verbinden",
+  "alreadyRunning": "spezado läuft schon auf diesem Gerät: gib den Code ein, den es zeigt.",
+  "installFailed": "spezado ließ sich nicht installieren: {reason}"
 }

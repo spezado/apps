@@ -222,5 +222,36 @@
   "vatSmallBusiness": "Small business (§ 19 UStG)",
   "writeInvoice": "Write the invoice",
   "yearly": "Yearly",
-  "yes": "yes"
+  "yes": "yes",
+  "welcomeTitle": "Welcome to spezado",
+  "welcomeText": "The app keeps your books with spezado, which runs on this device – nothing leaves it.",
+  "installTitle": "Install spezado on this device",
+  "installText": "Downloads spezado {version} from its release on GitHub, checks it and starts it with an icon in the menu bar or the system tray. It keeps running when you close the app.",
+  "@installText": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "installTextNoTray": "Downloads spezado {version} from its release on GitHub, checks it and starts it in the background. It keeps running when you close the app.",
+  "@installTextNoTray": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "startAtLogin": "Start spezado when I log in",
+  "installAndStart": "Install and start",
+  "connectInstead": "spezado runs already – connect to it",
+  "alreadyRunning": "spezado runs already on this device: enter the code it shows.",
+  "installFailed": "spezado could not be installed: {reason}",
+  "@installFailed": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  }
 }

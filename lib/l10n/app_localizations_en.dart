@@ -578,4 +578,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get yes => 'yes';
+
+  @override
+  String get welcomeTitle => 'Welcome to spezado';
+
+  @override
+  String get welcomeText => 'The app keeps your books with spezado, which runs on this device – nothing leaves it.';
+
+  @override
+  String get installTitle => 'Install spezado on this device';
+
+  @override
+  String installText(String version) {
+    return 'Downloads spezado $version from its release on GitHub, checks it and starts it with an icon in the menu bar or the system tray. It keeps running when you close the app.';
+  }
+
+  @override
+  String installTextNoTray(String version) {
+    return 'Downloads spezado $version from its release on GitHub, checks it and starts it in the background. It keeps running when you close the app.';
+  }
+
+  @override
+  String get startAtLogin => 'Start spezado when I log in';
+
+  @override
+  String get installAndStart => 'Install and start';
+
+  @override
+  String get connectInstead => 'spezado runs already – connect to it';
+
+  @override
+  String get alreadyRunning => 'spezado runs already on this device: enter the code it shows.';
+
+  @override
+  String installFailed(String reason) {
+    return 'spezado could not be installed: $reason';
+  }
 }

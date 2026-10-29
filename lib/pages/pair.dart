@@ -10,7 +10,10 @@ import '../app/state.dart';
 import '../widgets/common.dart';
 
 class PairPage extends StatefulWidget {
-  const PairPage({super.key});
+  const PairPage({super.key, this.onBack});
+
+  /// Back to installing spezado on this device, where the app can.
+  final VoidCallback? onBack;
 
   @override
   State<PairPage> createState() => _PairPageState();
@@ -94,7 +97,10 @@ class _PairPageState extends State<PairPage> {
                   Input(label: t.code, controller: _code),
                   Input(label: t.deviceName, controller: _name),
                   if (_failure case final failure?) Failure(failure),
-                  ButtonRow([FilledButton(onPressed: _busy ? null : _pair, child: Text(t.pair))]),
+                  ButtonRow([
+                    FilledButton(onPressed: _busy ? null : _pair, child: Text(t.pair)),
+                    if (widget.onBack case final back?) OutlinedButton(onPressed: back, child: Text(t.back)),
+                  ]),
                 ],
               ),
             ),

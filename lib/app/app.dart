@@ -15,7 +15,7 @@ import '../pages/documents.dart';
 import '../pages/invoices.dart';
 import '../pages/journal.dart';
 import '../pages/overview.dart';
-import '../pages/pair.dart';
+import '../pages/welcome.dart';
 import '../pages/reports.dart';
 import '../pages/review.dart';
 import '../pages/set_up.dart';
@@ -61,7 +61,7 @@ class _Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
-    if (!state.paired) return const PairPage();
+    if (!state.paired) return const WelcomePage();
     if (state.allBooks == null) {
       return Scaffold(
         body: Center(
